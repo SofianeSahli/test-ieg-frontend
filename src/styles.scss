@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'bootstrap/scss/bootstrap';
+@use 'styles/variables' as *;
+@use 'styles/global';
+@use 'sass:color';
+
+formly-validation-message {
+    color: $error-color !important; // or just `red` if not using variables
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}

@@ -1,0 +1,46 @@
+@use "variables" as *;
+.main-navbar {
+  background-color: $primary-color;
+  color: $background-color;
+  padding: 8px 0;
+
+  .nav-link {
+    color: $background-color;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $accent-color;
+      color: $background-color;
+    }
+
+    &.active,
+    &.router-link-active {
+      background-color: $warning-color;
+      color: $primary-color;
+      font-weight: bold;
+    }
+  }
+
+  .navbar-toggler {
+    border: none;
+    background: transparent;
+    color: $background-color;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .navbar-brand {
+    color: $background-color;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  box-shadow:  4px 8px rgba($neutral-gray, 0.8);
+}

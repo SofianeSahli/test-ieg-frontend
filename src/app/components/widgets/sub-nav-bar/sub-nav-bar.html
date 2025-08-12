@@ -1,0 +1,39 @@
+<nav class="subnavbar">
+  @if(navbarViewConfig.showBackButton){
+  <button
+    class="back-btn"
+    type="button"
+    (click)="goBack()"
+    aria-label="Go back"
+  >
+    <i class="bi bi-arrow-bar-left" aria-hidden="true"></i>
+  </button>
+  }
+  <div class="center-content">
+    @if (!searchActive() && navbarViewConfig.title !== null) {
+    <h2 class="title">{{ navbarViewConfig.title | translate }}</h2>
+    } @else {
+    <input
+      type="text"
+      class="search-input"
+      [@expandSearch]="searchActive() ? 'expanded' : 'collapsed'"
+      placeholder="Search..."
+      (input)="onInputChange($event)"
+    />
+    }
+    <button class="search-icon" (click)="toggleSearch()" aria-label="Search">
+      <i class="bi bi-search" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  @if(navbarViewConfig.showAddButton){
+  <button
+    class="add-btn"
+    type="button"
+    (click)="addEntryClicked.emit()"
+    aria-label="Add entry"
+  >
+    {{ "labels.add_entry" | translate }}
+  </button>
+  }
+</nav>

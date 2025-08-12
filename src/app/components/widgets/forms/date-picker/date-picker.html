@@ -1,0 +1,10 @@
+<div class="row">
+  @if(props.label ){
+  <div class="col-12">
+    <label for="field.id"> {{ props.label | translate }} </label>
+  </div>
+  }
+  <div class="col-12">
+    <input type="date" class="form-control" [formControl]="formControl" [formlyAttributes]="field" />
+  </div>
+</div>

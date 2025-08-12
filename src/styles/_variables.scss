@@ -1,0 +1,16 @@
+@use 'sass:color';
+$primary-color:    #E70013; // Tunisian Red
+$accent-color:     #B0000F; // Darker Red for hover
+$background-color: #FFFFFF; // White background
+$text-color:       #1B1B1B; // Dark neutral
+$light-text:       #666666;
+
+$warning-color:    #FF8C42;
+$error-color:      #D32F2F;
+$success-color:    #2E7D32;
+$info-color:       #1976D2;
+
+$neutral-gray:     #F0F0F0;
+
+$primary-hover:  color.adjust($primary-color, $lightness: -10%);
+$button-disabled: color.adjust($primary-color, $lightness: 30%);

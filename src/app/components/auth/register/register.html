@@ -1,0 +1,18 @@
+<app-loader [loading$]="loading$"></app-loader>
+<div class="row d-flex justify-content-center align-content-center" style="height: 100vh;">
+    <div class="col-12">
+        <form [formGroup]="form" class="row justify-content-center">
+            <div class="col-11">
+                <div class="row">
+                    <formly-form [form]="form" [model]="model" [fields]="fields"></formly-form>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-12 d-flex justify-content-center mt-3">
+        <button class="add-item-button" (click)="submit()">
+            <i class="fa fa-save"></i> {{ 'labels.save' | translate }}
+        </button>
+
+    </div>
+</div>

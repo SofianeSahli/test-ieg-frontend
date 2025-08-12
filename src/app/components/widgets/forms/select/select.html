@@ -1,0 +1,63 @@
+<div class="dropdown" [class.show]="dropdownOpen">
+  <button
+    class="btn btn-outline-primary dropdown-toggle w-100"
+    type="button"
+    (click)="toggleDropdown()"
+    [attr.aria-expanded]="dropdownOpen"
+  >
+    {{ to.placeholder || "Select options" }}
+  </button>
+
+  <div
+    class="dropdown-menu w-100 p-3"
+    [class.show]="dropdownOpen"
+    style="max-height: 250px; overflow-y: auto"
+  >
+    @if (newOptions) { @for (option of newOptions; track option.value; let i =
+    $index) {
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [id]="'option_' + i"
+        [checked]="isSelected(option)"
+        (change)="onOptionToggle(option)"
+      />
+      <label class="form-check-label" [for]="'option_' + i">
+        {{ option.label }}
+      </label>
+    </div>
+    } }
+    <div class="dropdown-divider my-2"></div>
+
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Add new option"
+        [(ngModel)]="newOptionLabel"
+        (keydown.enter)="addNewOption()"
+      />
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="addNewOption()"
+        [disabled]="!newOptionLabel.trim()"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="mt-2">
+  <span *ngFor="let item of selected" class="badge bg-primary me-1">
+    {{ item.label }}
+    <button
+      type="button"
+      class="btn-close btn-close-white btn-sm ms-1"
+      aria-label="Remove"
+      (click)="removeSelected(item)"
+    ></button>
+  </span>
+</div>

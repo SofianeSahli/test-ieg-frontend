@@ -1,0 +1,53 @@
+<div class="row">
+  @if(imagePreview) {
+  <div
+    class="col-12 mt-2 d-flex align-items-center justify-content-center"
+    style="max-height: 400px; overflow: hidden"
+  >
+    <img
+      [src]="imagePreview"
+      alt="Preview"
+      style="max-width: 100%; max-height: 200px; border-radius: 5px"
+    />
+  </div>
+  } @if(props.label) {
+  <div class="col-12">
+    <label for="field.id"> {{ props.label | translate }} </label>
+  </div>
+  }
+
+  <div class="col-12 d-flex align-items-center">
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      [formlyAttributes]="field"
+      (change)="onFileChange($event)"
+      [required]="props.required ? props.required : false"
+      [accept]="props['accept'] || '*/*'"
+    />
+
+    <button
+      type="button"
+      class="btn btn-primary me-2"
+      (click)="fileInput.click()"
+    >
+      {{ "Select File" | translate }}
+    </button>
+
+    <span class="file-name">
+      {{
+        control.value?.name ||
+          (props.placeholder
+            ? (props.placeholder | translate)
+            : "No file selected")
+      }}
+    </span>
+  </div>
+
+  @if(formControl.invalid && (formControl.touched || formControl.dirty)) {
+  <div class="col-12">
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </div>
+  }
+</div>

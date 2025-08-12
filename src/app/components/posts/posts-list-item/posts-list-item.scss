@@ -1,0 +1,25 @@
+@use "variables" as *;
+@use "global" as *;
+  .post-card {
+       width: 100%;
+       margin: 8px;
+       border-radius: 12px;
+       overflow: hidden;
+       
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   }
+
+   .img-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 60vh;
+    overflow: hidden;
+&-img {
+    cursor: zoom-in;
+    width:100%;
+        object-fit: cover;
+    }
+   }
+   

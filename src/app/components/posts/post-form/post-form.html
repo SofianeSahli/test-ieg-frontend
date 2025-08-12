@@ -1,0 +1,28 @@
+<app-loader [loading$]="loading$"></app-loader>
+<app-sub-nav-bar
+  [navbarViewConfig]="{
+    showBackButton: true,
+    showAddButton: false,
+    title: 'labels.noveau_posts'
+  }"
+></app-sub-nav-bar>
+
+<div class="row d-flex justify-content-center mt-5 pt-5">
+  <div class="col-11">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <formly-form
+        [model]="model"
+        [fields]="fields"
+        [form]="form"
+      ></formly-form>
+
+      <button
+        type="submit"
+        class="add-item-button mt-3"
+        [disabled]="!form.valid"
+      >
+        {{ "labels.add_entry" | translate }}
+      </button>
+    </form>
+  </div>
+</div>

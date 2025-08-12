@@ -1,0 +1,59 @@
+@use "variables" as *;
+@use "global" as *;
+.subnavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: $accent-color;
+  color: $background-color;
+  box-shadow: 0 2px 4px rgba($neutral-gray, 0.3);
+  position: relative;
+
+  .back-btn,
+  .add-btn {
+    background: none;
+    border: none;
+    color: $background-color;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .center-content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .title {
+      margin: 0;
+      font-size: 1.25rem;
+      color: $background-color;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      background: none;
+      border: none;
+      color: $background-color;
+      font-size: 1.1rem;
+    }
+    .search-input {
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+  }
+}

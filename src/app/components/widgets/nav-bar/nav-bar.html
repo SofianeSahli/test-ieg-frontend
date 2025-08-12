@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-md container-fluid main-navbar text-white">
+  <div class="container-fluid">
+    <div class="navbar-brand">LOGO</div>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" aria-controls="navbarNav"
+      [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
+      <i class="bi bi-list"></i>
+    </button>
+    <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav gap-2">
+        @for(route of ROUTES; track route.title) {
+        <li class="nav-item">
+          <a class="nav-link navigation-bar-item" [routerLink]="route.url" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            {{ route.title | translate }}
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,32 @@
+<div class="item-card">
+  <div class="item-card-image">
+    <img src="assets/images/no-thumbnail.webp"  
+    alt="card"/>
+  </div>
+  <div class="item-card-header">
+    <ng-container *ngIf="icon">
+      <img [src]="icon" alt="" class="item-card-icon" />
+    </ng-container>
+    <div class="item-card-text">
+      <h3>{{ title }}</h3>
+      <p *ngIf="subtitle">{{ subtitle }}</p>
+    </div>
+  </div>
+
+  <div class="item-card-body" *ngIf="content">{{ content }}</div>
+
+  <div class="item-card-actions">
+    <div *ngIf="routing">
+      <a [routerLink]="routing.route">
+        <button [ngClass]="routing.cssClass">
+          {{ routing!.label | translate }}
+        </button>
+      </a>
+    </div>
+    <div *ngIf="actions">
+      <button [ngClass]="actions.cssClass" (click)="deleteClicked.emit(item)">
+        {{ actions.label | translate }}
+      </button>
+    </div>
+  </div>
+</div>

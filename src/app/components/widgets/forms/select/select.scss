@@ -1,0 +1,51 @@
+@use "global" as *;
+@use "variables" as *;
+@use 'sass:color';
+
+.custom-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  color: $text-color;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: $light-text;
+    opacity: 1;
+  }
+
+  &:focus {
+    border-color: $info-color;
+    outline: none;
+    box-shadow: 0 0 4px rgba($info-color, 0.4);
+  }
+
+  &:disabled {
+    background-color: $neutral-gray;
+    color: $light-text;
+    cursor: not-allowed;
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: $error-color;
+  }
+
+  &.ng-valid.ng-touched:not(.ng-invalid) {
+    border-color: $success-color;
+  }
+
+  option {
+    color: $text-color;
+    background-color: color.adjust($background-color, $lightness: 2%);
+  }
+
+  option:checked,
+  option:hover,
+  option:focus {
+    color: white !important;
+    background-color: $primary-color !important;
+  }
+}

@@ -1,0 +1,45 @@
+<div class="row">
+  @if(props.label) {
+  <div class="col-12">
+    <label for="field.id"> {{ props.label | translate }} </label>
+  </div>
+  }
+
+  <div class="col-12">
+    <ng-container *ngIf="props.type === 'textarea'; else inputField">
+      <textarea
+        [ngClass]="{
+          'is-invalid':
+            formControl.invalid && (formControl.touched || formControl.dirty)
+        }"
+        class="custom-input form-control"
+        [formControl]="formControl"
+        [formlyAttributes]="field"
+        [placeholder]="props.placeholder ? (props.placeholder | translate) : ''"
+        [required]="props.required ? props.required : false"
+        rows="5"
+      ></textarea>
+    </ng-container>
+
+    <ng-template #inputField>
+      <input
+        [ngClass]="{
+          'is-invalid':
+            formControl.invalid && (formControl.touched || formControl.dirty)
+        }"
+        class="custom-input form-control"
+        [formControl]="formControl"
+        [formlyAttributes]="field"
+        [placeholder]="props.placeholder ? (props.placeholder | translate) : ''"
+        [required]="props.required ? props.required : false"
+        [type]="props.type ?? 'text'"
+      />
+    </ng-template>
+  </div>
+
+  <div
+    *ngIf="formControl.invalid && (formControl.touched || formControl.dirty)"
+  >
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </div>
+</div>
