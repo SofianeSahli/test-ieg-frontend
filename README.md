@@ -12,7 +12,6 @@ It also integrates:
 - **ngx-formly** for dynamic and reusable form generation
 - **Session-based authentication** for secure user sessions
 - **Server-Side Rendering (SSR)** with **Express** for SEO and performance optimization
-- **Elasticsearch** for full-text search, analytics, and efficient data indexing
 
 The architecture is based on **standalone components** for better modularity and scalability, making the project adaptable for **microservice-oriented backends**.
 
@@ -21,7 +20,6 @@ The architecture is based on **standalone components** for better modularity and
 ## Prerequisites
 - **Node.js** (recommended: v18+)
 - **npm** (recommended: v9+)
-- **Elasticsearch** running locally or accessible remotely
 - Internet connection to install dependencies
 
 ---
@@ -42,3 +40,4 @@ npm install --legacy-peer-deps
 npm run ng serve
 ```
 The application will be available at: http://localhost:4200
+
