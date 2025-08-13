@@ -37,17 +37,57 @@
       <input
         type="text"
         [(ngModel)]="newComment"
-        placeholder="Write a comment..."
+        placeholder="Commentez..."
         class="form-control form-control-sm mb-2"
       />
-      <button class="btn btn-sm btn-success" (click)="addComment()">
-        Comment
-      </button>
+      <div class="d-flex justify-content-between">
+        <button class="add-item-button" (click)="addComment()">
+          {{ "labels.add_comment" | translate }}
+        </button>
+        @if((userProfile$ | async)?._id === post.userId ){
+        <div class="d-flex justify-content-end">
+          <button
+            class="delete-button"
+            style="margin-right: 4px"
+            (click)="onDelete(post)"
+          >
+            {{ "labels.delete" | translate }}
+          </button>
+
+          <button
+            class="details-button"
+            (click)="details()"
+            style="margin-left: 4px"
+          >
+            {{ "labels.details" | translate }}
+          </button>
+        </div>
+
+        }
+      </div>
     </div>
-    @if(post.comments && post.comments.length){
+    @if(post.comments && post.comments.length > 0){
     <ul class="list-group list-group-flush mt-3">
-      @for(c of comments; track c){
-      <li class="list-group-item p-1" *ngFor="let c of comments">💬 {{ c }}</li>
+      @for(c of post.comments; track c._id){
+      <li class="list-group-item p-1 d-flex align-items-center gap-2">
+        <img
+          *ngIf="c.user?.profilePicture"
+          [src]="c.user.profilePicture"
+          alt="Avatar"
+          class="rounded-circle"
+          style="width: 24px; height: 24px; object-fit: cover"
+        />
+        <div>
+          <strong
+            >{{ c.user?.firstName || "Unknown" }}
+            {{ c.user?.lastName || "" }}</strong
+          >
+          <small class="text-muted ms-2" style="font-size: 0.75rem">
+            {{ c.createdAt | date : "short" }}
+          </small>
+          <div>{{ c.text }}</div>
+        </div>
+      </li>
       }
     </ul>
     }

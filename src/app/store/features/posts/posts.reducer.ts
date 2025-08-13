@@ -31,10 +31,80 @@ export const postReducer = createReducer(
     loading: true,
     error: null,
   })),
+  on(postsActions.update, (state, action) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
   on(postsActions.addPostSuccess, (state, { post }) => {
     return postAdapter.addOne(post, {
       ...state,
       loading: false,
     });
+  }),
+  on(postsActions.updateSuccess, (state, { post }) => {
+    return postAdapter.upsertOne(post, {
+      ...state,
+      loading: false,
+    });
+  }),
+  on(postsActions.deletePostSuccess, (state, { id }) => {
+    return postAdapter.removeOne(id, {
+      ...state,
+      loading: false,
+    });
+  }),
+  on(postsActions.deletePost, (state, action) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(postsActions.commentPostSuccess, (state, { comment }) => {
+    // Find the post entity
+    const post = state.entities[comment.postId!];
+    if (!post) return state; // post not found, return unchanged state
+
+    let updatedComments;
+
+    if (!comment.parentId) {
+      // Root-level comment, append to post.comments
+      updatedComments = [...(post.comments || []), comment];
+    } else {
+      // Nested comment, recursively add to correct parent comment
+      const addReplyToComments = (comments: any[]): any[] => {
+        return comments.map((c) => {
+          if (c._id === comment.parentId) {
+            return {
+              ...c,
+              comments: [...(c.comments || []), comment],
+            };
+          } else if (c.comments?.length) {
+            return {
+              ...c,
+              comments: addReplyToComments(c.comments),
+            };
+          } else {
+            return c;
+          }
+        });
+      };
+
+      updatedComments = addReplyToComments(post.comments || []);
+    }
+
+    // Update post with new comments
+    const updatedPost = {
+      ...post,
+      comments: updatedComments,
+    };
+
+    // Use adapter to update entity in state
+    return postAdapter.updateOne(
+      {
+        id: updatedPost.id!,
+        changes: updatedPost,
+      },
+      state
+    );
   })
 );

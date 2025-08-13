@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Routes as ROUTES } from './config/routes';
 import { Login } from './components/auth/login/login';
 import { Register } from './components/auth/register/register';
+import { dashboardRouting } from './components/dashboard/dashboard.routing';
 
 export const routes: Routes = [
   {
@@ -14,9 +15,6 @@ export const routes: Routes = [
   },
   {
     path: ROUTES.DASHBOARD.HOME,
-    loadChildren: () =>
-      import('./components/dashboard/dashboard.routing').then(
-        (m) => m.dashboardRouting
-      ),
+    children: dashboardRouting,
   },
 ];

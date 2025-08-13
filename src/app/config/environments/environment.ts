@@ -19,7 +19,7 @@ export const environment = {
   profile: {
     get: '/users/profile',
   },
-  employees: {
-    get: '/profiles/users/agency/',
+  comment: {
+    get: '/posts/comments',
   },
 };

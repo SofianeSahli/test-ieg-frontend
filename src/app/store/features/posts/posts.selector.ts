@@ -15,7 +15,7 @@ export const selectPostEntities = selectEntities;
 export const selectPostIds = selectIds;
 export const selectPostTotal = selectTotal;
 
-export const selectEmployeeById = (id: string) =>
+export const selectPostById = (id: string) =>
   createSelector(selectPostEntities, (entities) =>
     id ? entities[id] ?? null : null
   );

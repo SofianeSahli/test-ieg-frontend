@@ -7,6 +7,9 @@
     "vehicules": "Véhicules"
   },
   "labels": {
+    "data_deleted": "Données supprimée",
+    "add_comment": "Commenter",
+    "details": "Détailles",
     "noveau_posts": "Nouveau posts",
     "employee_index": "Liste des employés",
     "data_saved": "Données enregistrées avec succès",

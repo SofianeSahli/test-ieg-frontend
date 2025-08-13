@@ -9,6 +9,7 @@ import { ToastService } from '../../services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Routes } from '../../../config/routes';
+import { Comment as PostComment } from '../../states/PostState';
 
 export const loadPosts = createEffect(
   () => {
@@ -24,7 +25,7 @@ export const loadPosts = createEffect(
           catchError((error: HttpErrorResponse) => {
             return of(
               postsActions.failure({
-                errors: error.error,
+                errors: error.error.message,
               })
             );
           })
@@ -53,7 +54,7 @@ export const addPost = createEffect(
           catchError((error: HttpErrorResponse) => {
             return of(
               postsActions.failure({
-                errors: error.error,
+                errors: error.error.message,
               })
             );
           })
@@ -78,7 +79,98 @@ export const queryPost = createEffect(
           catchError((error: HttpErrorResponse) => {
             return of(
               postsActions.failure({
-                errors: error.error,
+                errors: error.error.message,
+              })
+            );
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+export const updatePost = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const postsService = inject(PostsService);
+    const toastService = inject(ToastService);
+    const translateSerive = inject(TranslateService);
+    const router = inject(Router);
+    return actions$.pipe(
+      ofType(postsActions.update),
+      switchMap(({ post }) =>
+        postsService.update(post.id!, post).pipe(
+          map((post) => {
+            toastService.show(translateSerive.instant('labels.data_saved'));
+            router.navigateByUrl(Routes.DASHBOARD.HOME);
+            return postsActions.addPostSuccess({ post });
+          }),
+          catchError((error: HttpErrorResponse) => {
+            return of(
+              postsActions.failure({
+                errors: error.error.message,
+              })
+            );
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+
+export const deletePost = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const postsService = inject(PostsService);
+    const toastService = inject(ToastService);
+    const translateSerive = inject(TranslateService);
+    return actions$.pipe(
+      ofType(postsActions.deletePost),
+      switchMap(({ id }) =>
+        postsService.delete(id).pipe(
+          map(() => {
+            toastService.show(
+              translateSerive.instant('labels.data_deleted'),
+              'danger'
+            );
+            return postsActions.deletePostSuccess({ id });
+          }),
+          catchError((error: HttpErrorResponse) => {
+            return of(
+              postsActions.failure({
+                errors: error.error.message,
+              })
+            );
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+
+export const commentPost = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const postsService = inject(PostsService);
+    const toastService = inject(ToastService);
+    const translateSerive = inject(TranslateService);
+    return actions$.pipe(
+      ofType(postsActions.commentPost),
+      switchMap((action) =>
+        postsService.comment(action.comment as PostComment).pipe(
+          map((comment) => {
+            toastService.show(
+              translateSerive.instant('labels.data_saved'),
+              'success'
+            );
+            return postsActions.commentPostSuccess({ comment });
+          }),
+          catchError((error: HttpErrorResponse) => {
+            return of(
+              postsActions.failure({
+                errors: error.error.message,
               })
             );
           })

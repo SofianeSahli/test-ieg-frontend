@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NavBar } from '../../widgets/nav-bar/nav-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { AuthActions } from '../../../store/features/auth/auth.action';
+import { selectUser } from '../../../store/features/auth/auth.selector';
 
 @Component({
   selector: 'app-home',
@@ -14,5 +16,7 @@ export class Home implements OnInit {
   router = inject(Router);
   store = inject(Store);
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(AuthActions.getProfile());
+  }
 }

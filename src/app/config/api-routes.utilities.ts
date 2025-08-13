@@ -19,7 +19,8 @@ export const ApiRoutes = {
     patch: `${environment.apiBaseUrl}${environment.profile.get}`,
     get: `${environment.apiBaseUrl}${environment.profile.get}`,
   },
-  employees: {
-    get: `${environment.apiBaseUrl}${environment.employees.get}`,
+
+  comment: {
+    get: `${environment.apiBaseUrl}${environment.comment.get}`,
   },
 };

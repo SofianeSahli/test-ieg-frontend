@@ -11,8 +11,10 @@ export interface Comment {
   id?: string;
   user?: User | string;
   userId?: string;
-  content: string;
+  text: string;
   createdAt?: string;
+  parentId?: string;
+  postId?: string;
 }
 
 export interface Post {

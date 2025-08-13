@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiRoutes } from '../../config/api-routes.utilities';
-import { Post } from '../states/PostState';
+import { Post, Comment as PostComment } from '../states/PostState';
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +52,13 @@ export class PostsService {
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${ApiRoutes.posts.add}/${id}`, {
+    return this.http.delete<void>(`${ApiRoutes.posts.add}/id/${id}`, {
+      withCredentials: true,
+    });
+  }
+
+  comment(comment: PostComment) {
+    return this.http.post<PostComment>(`${ApiRoutes.comment.get}`, comment, {
       withCredentials: true,
     });
   }
