@@ -1,6 +1,6 @@
 import { Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Post } from '../../../store/states/PostState';
+import { Post, Tag } from '../../../store/states/PostState';
 import { Loader } from '../../widgets/loader/loader';
 import { FormlyForm } from '@ngx-formly/core';
 import { Store } from '@ngrx/store';
@@ -21,6 +21,9 @@ import { postsActions } from '../../../store/features/posts/posts.action';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
 import { environment } from '../../../config/environments/environment';
+import { CommentsSections } from '../comments-sections/comments-sections';
+import { PostsService } from '../../../store/services/PostsService';
+import { cpSync } from 'fs';
 
 @Component({
   selector: 'app-post-form',
@@ -30,13 +33,14 @@ import { environment } from '../../../config/environments/environment';
     Loader,
     SubNavBar,
     TranslateModule,
+    CommentsSections,
   ],
   templateUrl: './post-form.html',
   styleUrl: './post-form.scss',
 })
 export class PostForm implements OnInit {
   form = new FormGroup({});
-  model: Partial<Post> = {
+  model: any = {
     title: '',
     text: '',
     comments: [],
@@ -47,9 +51,18 @@ export class PostForm implements OnInit {
   private route = inject(ActivatedRoute);
   loginErrors = this.store.selectSignal(selectPostError);
   loading$ = this.store.select(selectPostLoading);
+  postService = inject(PostsService);
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
       attachErrorModalEffect(this.loginErrors, this.modalService);
+      this.postService.getTags().subscribe((tags: any) => {
+        const tagsField = this.fields[0].fieldGroup?.find(
+          (f) => f.key === 'tags'
+        );
+        if (tagsField && Array.isArray(tags) && tags.length > 0) {
+          tagsField.props!.options = tags;
+        }
+      });
     }
   }
 
@@ -57,16 +70,18 @@ export class PostForm implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['post']) {
         const post = params['post'];
-        console.log(post);
-        this.store
-          .select(selectPostById(post))
-          .pipe(take(1))
-          .subscribe((value) => {
+        this.store.select(selectPostById(post)).subscribe((value) => {
+          if (value) {
             this.model = structuredClone({
               ...value,
               file: value?.picture ? this.imageUrl(value?.picture) : null,
+              tags: value?.tags?.map((elem: Tag) => ({
+                value: elem.name,
+                label: elem.name,
+              })),
             });
-          });
+          }
+        });
       }
     });
   }

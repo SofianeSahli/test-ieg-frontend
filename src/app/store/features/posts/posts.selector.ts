@@ -16,9 +16,10 @@ export const selectPostIds = selectIds;
 export const selectPostTotal = selectTotal;
 
 export const selectPostById = (id: string) =>
-  createSelector(selectPostEntities, (entities) =>
-    id ? entities[id] ?? null : null
-  );
+  createSelector(selectPostEntities, (entities) => {
+    console.log(entities);
+    return id ? entities[id] ?? null : null;
+  });
 
 export const selectPostLoading = createSelector(
   selectPostState,

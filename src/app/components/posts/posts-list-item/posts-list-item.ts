@@ -18,19 +18,21 @@ import { Routes } from '../../../config/routes';
 import { Store } from '@ngrx/store';
 import { selectUser } from '../../../store/features/auth/auth.selector';
 import { postsActions } from '../../../store/features/posts/posts.action';
-import {
-  selectPostError,
-  selectPostLoading,
-} from '../../../store/features/posts/posts.selector';
-import { attachErrorModalEffect } from '../../../utils/error-modal';
+import { CommentsSections } from '../comments-sections/comments-sections';
 
 @Component({
   selector: 'app-posts-list-item',
-  imports: [CommonModule, FormsModule, TranslateModule, AsyncPipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    AsyncPipe,
+    CommentsSections,
+  ],
   templateUrl: './posts-list-item.html',
   styleUrl: './posts-list-item.scss',
 })
-export class PostListItem implements OnInit {
+export class PostListItem {
   @Input() post!: Post;
   modalService = inject(NgbModal);
   private modalRef!: NgbModalRef;
@@ -41,9 +43,7 @@ export class PostListItem implements OnInit {
   likes = 0;
   newComment = '';
   comments: string[] = [];
-  ngOnInit(): void {
-    console.log(this.post.comments);
-  }
+
   toggleLike() {
     this.likes++;
   }

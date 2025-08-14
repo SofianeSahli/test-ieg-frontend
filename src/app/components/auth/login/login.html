@@ -9,21 +9,25 @@
   "
 >
   <div class="row">
-    <div class="col-5 col-sm-12">
+    <div class="col-12">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <formly-form
           [model]="model"
           [fields]="fields"
           [form]="form"
         ></formly-form>
-
-        <button
-          type="submit"
-          class="add-item-button mt-3"
-          [disabled]="!form.valid"
-        >
-          Login
-        </button>
+        <div class="d-flex justify-content-evenly">
+          <button
+            type="submit"
+            class="add-item-button mt-3"
+            [disabled]="!form.valid"
+          >
+            {{ "labels.submit" | translate }}
+          </button>
+          <button type="button" class="details-button mt-3" (click)="navto()">
+            {{ "labels.register" | translate }}
+          </button>
+        </div>
       </form>
     </div>
   </div>

@@ -13,6 +13,8 @@ import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { isPlatformBrowser } from '@angular/common';
 import { attachErrorModalEffect } from '../../../../utils/error-modal';
 import { AuthActions } from '../../../../store/features/auth/auth.action';
+import { PROFILE_FORM } from './profile.form';
+import { environment } from '../../../../config/environments/environment';
 
 @Component({
   selector: 'app-profile-page',
@@ -32,7 +34,7 @@ export class ProfilePage implements OnInit {
   loading$ = this.store.select(selectIsLoading);
   private modalService = inject(NgbModal);
   profilesUpdateErrors = this.store.selectSignal(selectError);
-  fields: FormlyFieldConfig[] = [];
+  fields: FormlyFieldConfig[] = PROFILE_FORM;
   form = new FormGroup({});
   model: any = {};
   plateformId = inject(PLATFORM_ID);
@@ -47,7 +49,12 @@ export class ProfilePage implements OnInit {
     if (isPlatformBrowser(this.plateformId)) {
       this.user$.subscribe((user) => {
         if (user) {
-          this.model = structuredClone(user);
+          this.model = structuredClone({
+            ...user,
+            file:
+              environment.apiBaseUrl.replace(/\/api$/, '') +
+              user.profilePicture,
+          });
         }
       });
     }

@@ -62,4 +62,10 @@ export class PostsService {
       withCredentials: true,
     });
   }
+
+  getTags() {
+    return this.http.get(`${ApiRoutes.posts.tags}`, {
+      withCredentials: true,
+    });
+  }
 }

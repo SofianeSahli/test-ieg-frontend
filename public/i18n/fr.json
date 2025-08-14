@@ -4,9 +4,19 @@
     "employees": "Employés",
     "interventions": "Interventions",
     "contracts": "Contrats",
-    "vehicules": "Véhicules"
+    "vehicules": "Véhicules",
+    "profile": "Espace profile"
+  },
+  "notifications": {
+    "someone_commented": "Vous reçus un nouveau commentaires",
+    "someone_talkin_to_you": "Quelqu'un a commenté l'une de vos publications"
   },
   "labels": {
+    "profile_info": "Vos informations de profils",
+    "afficher_les": "Afficher les ",
+    "submit": "Valider",
+    "register": "Je n'ai pas de compte",
+    "login": "Authentification",
     "data_deleted": "Données supprimée",
     "add_comment": "Commenter",
     "details": "Détailles",

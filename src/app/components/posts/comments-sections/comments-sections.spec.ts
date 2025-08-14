@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserForm } from './user-form';
+import { CommentsSections } from './comments-sections';
 
-describe('UserForm', () => {
-  let component: UserForm;
-  let fixture: ComponentFixture<UserForm>;
+describe('CommentsSections', () => {
+  let component: CommentsSections;
+  let fixture: ComponentFixture<CommentsSections>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserForm]
+      imports: [CommentsSections]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserForm);
+    fixture = TestBed.createComponent(CommentsSections);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

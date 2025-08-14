@@ -4,17 +4,20 @@ import { User } from './UsersState';
 export interface Tag {
   id: string;
   name: string;
+  label?: string;
+  value?: string;
   slug?: string;
 }
 
 export interface Comment {
   id?: string;
-  user?: User | string;
+  user?: User;
   userId?: string;
   text: string;
   createdAt?: string;
   parentId?: string;
   postId?: string;
+  _id?: string;
 }
 
 export interface Post {
@@ -25,7 +28,7 @@ export interface Post {
   picture?: string | File;
   user?: User | null;
   userId?: string;
-  tags?: Tag[] | string[];
+  tags?: Tag[];
   likesCount?: number;
   likes?: string[];
   comments: any;

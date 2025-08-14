@@ -1,21 +1,90 @@
 <nav class="navbar navbar-expand-md container-fluid main-navbar text-white">
   <div class="container-fluid">
     <div class="navbar-brand">LOGO</div>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" aria-controls="navbarNav"
-      [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isCollapsedSearchCollapsed = !isCollapsedSearchCollapsed"
+      aria-controls="navbarNav"
+      [attr.aria-expanded]="!isCollapsedSearchCollapsed"
+      aria-label="Toggle navigation"
+    >
       <i class="bi bi-list"></i>
     </button>
-    <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-center" id="navbarNav">
+
+    <!-- Notification overlay -->
+    <div
+      class="notification-overlay p-0"
+      [@slideInOut]="isNotificationOpen ? 'in' : 'out'"
+    >
+      <div class="custom">
+        <h5>Notifications</h5>
+        <button
+          style="margin-left: auto; color: white"
+          class="btn-close"
+          aria-label="Close"
+          (click)="toggleNotifications()"
+        ></button>
+      </div>
+      <div class="overlay-body p-2">
+        @for (notif of (notificaitons$ | async); track notif.timestamp) {
+        <button class="notification-item p-2" (click)="getNotif(notif)">
+          <h4 class="mb-0" style="color: black; font-size: 16px">
+            {{ notif.type | translate }}
+          </h4>
+          <p class="mb-0" style="color: black; font-size: 14px; opacity: 0.7">
+            {{ notif.message | translate }}
+          </p>
+          <small class="text-muted" style="color: black">
+            {{ notif.timestamp | date : "short" }}
+          </small>
+        </button>
+        }
+      </div>
+    </div>
+
+    <div
+      [ngbCollapse]="isCollapsedSearchCollapsed"
+      class="collapse navbar-collapse"
+      id="navbarNav"
+    >
+      <!-- Left side nav links -->
       <ul class="navbar-nav gap-2">
-        @for(route of ROUTES; track route.title) {
+        @for (route of ROUTES; track route.title) {
         <li class="nav-item">
-          <a class="nav-link navigation-bar-item" [routerLink]="route.url" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            class="nav-link navigation-bar-item"
+            [routerLink]="route.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
             {{ route.title | translate }}
           </a>
         </li>
         }
       </ul>
+
+      <!-- Notification bell aligned right -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item position-relative">
+          <a
+            class="nav-link"
+            (click)="toggleNotifications()"
+            style="cursor: pointer"
+          >
+            <i class="bi bi-bell" style="color: white"></i>
+            @if (unreadCount > 0) {
+            <span
+              class="badge bg-info position-absolute top-0 start-100 translate-middle"
+            >
+              {{ unreadCount }}
+            </span>
+            }
+          </a>
+        </li>
+      </ul>
+      <button type="button" (click)="logout()">logout</button>
     </div>
   </div>
 </nav>

@@ -12,10 +12,13 @@ import {
   selectUser,
 } from '../../../store/features/auth/auth.selector';
 import { AuthActions } from '../../../store/features/auth/auth.action';
+import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { Routes } from '../../../config/routes';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, FormlyForm, Loader],
+  imports: [ReactiveFormsModule, FormlyForm, Loader, TranslateModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -25,6 +28,7 @@ export class Login implements OnInit {
   user$ = this.store.select(selectUser);
   loginErrors = this.store.selectSignal(selectError);
   loading$ = this.store.select(selectIsLoading);
+  router = inject(Router);
   form = new FormGroup({});
   model = {
     username: '',
@@ -33,36 +37,48 @@ export class Login implements OnInit {
 
   fields: FormlyFieldConfig[] = [
     {
-      key: 'username',
-      type: 'input',
+      wrappers: ['section'],
       props: {
-        label: 'labels.email_username',
-        placeholder: 'labels.email_username',
-        required: true,
+        label: 'labels.login',
       },
-    },
-    {
-      key: 'password',
-      type: 'input',
-      props: {
-        type: 'password',
-        label: 'labels.password',
-        placeholder: 'labels.password',
-        required: true,
-      },
+      fieldGroup: [
+        {
+          key: 'username',
+          type: 'input',
+          props: {
+            label: 'labels.email_username',
+            placeholder: 'labels.email_username',
+            required: true,
+          },
+        },
+        {
+          key: 'password',
+          type: 'input',
+          props: {
+            type: 'password',
+            label: 'labels.password',
+            placeholder: 'labels.password',
+            required: true,
+          },
+        },
+      ],
     },
   ];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
-      this.store.dispatch(AuthActions.getProfile());
       attachErrorModalEffect(this.loginErrors, this.modalService);
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(AuthActions.checkSession());
+  }
 
   onSubmit() {
     this.store.dispatch(AuthActions.login(this.model));
+  }
+  navto() {
+    this.router.navigate([Routes.AUTH.REGISTER]);
   }
 }

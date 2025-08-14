@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-12 d-flex">
+    <span class="span-for-click" (click)="toggle()"
+      >{{ "labels.afficher_les" | translate }} {{ comments?.length }}</span
+    >
+  </div>
+
+  <div [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'" class="col-12">
+    <ul class="list-group list-group-flush mt-3" class="comments-box">
+      @for(c of comments; track c._id){
+      <li class="list-group-item p-1 d-flex align-items-center gap-2">
+        @if(c.user?.profilePicture){
+        <img
+          [src]="imageUrl(c.user!.profilePicture!)"
+          alt="Avatar"
+          class="rounded-circle"
+          style="width: 24px; height: 24px; object-fit: cover"
+        />}@else {
+        <img
+          [src]="'assets/images/no-thumbnail.webp'"
+          alt="Avatar"
+          class="rounded-circle"
+          style="width: 24px; height: 24px; object-fit: cover"
+        />
+        }
+        <div>
+          <strong
+            >{{ c.user?.firstName || "Unknown" }}
+            {{ c.user?.lastName || "" }}</strong
+          >
+          <small class="text-muted ms-2" style="font-size: 0.75rem">
+            {{ c.createdAt | date : "short" }}
+          </small>
+          <div>{{ c.text }}</div>
+        </div>
+      </li>
+      }
+    </ul>
+  </div>
+</div>

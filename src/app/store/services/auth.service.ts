@@ -25,6 +25,8 @@ export class AuthService {
   }
 
   logout(): void {
+    console.log('addd');
+
     this.http.post(ApiRoutes.logout, {}, { withCredentials: true }).subscribe({
       next: () => {
         this.router.navigate([Routes.AUTH.LOGIN]);
@@ -35,21 +37,9 @@ export class AuthService {
     });
   }
 
-  // Check session status (optional)
-  /*
-  isLoggedIn(): Observable<boolean> {
-    return this.http
-      .get<{ loggedIn: boolean }>(ApiRoutes.sessionStatus, {
-        withCredentials: true,
-      })
-      .pipe(
-        catchError(() => {
-          return new Observable((observer) => {
-            observer.next(false);
-            observer.complete();
-          });
-        }),
-        tap((response) => !!response.loggedIn)
-      );
-  }*/
+  isLoggedIn(): Observable<{ valid: boolean }> {
+    return this.http.get<{ valid: boolean }>(ApiRoutes.sessionStatus, {
+      withCredentials: true,
+    });
+  }
 }

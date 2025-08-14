@@ -22,4 +22,17 @@
         object-fit: cover;
     }
    }
-   
+   .post-meta {
+       display: flex;
+       gap: 8px;
+       font-size: 0.875rem;
+       color: #555;
+       flex-wrap: wrap;
+   }
+
+   .post-meta .tag {
+       background-color: #eef;
+       padding: 2px 6px;
+       border-radius: 4px;
+       font-size: 0.75rem;
+   }

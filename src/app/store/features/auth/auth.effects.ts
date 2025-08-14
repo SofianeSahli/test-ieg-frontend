@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProfileService } from '../../services/profile.service';
 import { ToastService } from '../../services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Routes } from '../../../config/routes';
 import { Store } from '@ngrx/store';
 import { Login } from '../../../components/auth/login/login';
@@ -122,6 +122,56 @@ export const registerEffect = createEffect(
           })
         )
       )
+    );
+  },
+  { functional: true }
+);
+export const checkSessionEffects = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const profileService = inject(AuthService);
+    const router = inject(Router);
+
+    return actions$.pipe(
+      ofType(AuthActions.checkSession),
+      switchMap(() =>
+        profileService.isLoggedIn().pipe(
+          map(() => {
+            // Successful session check: navigate to dashboard if not already there
+            if (!router.url.startsWith(Routes.DASHBOARD.HOME)) {
+              router.navigateByUrl(Routes.DASHBOARD.HOME);
+            }
+            return AuthActions.checkSessionSuccess();
+          }),
+          catchError((error: HttpErrorResponse) => {
+            // If not on login page, redirect to login
+            if (!router.url.startsWith(Routes.AUTH.LOGIN)) {
+              router.navigateByUrl(Routes.AUTH.LOGIN);
+            }
+            return of(
+              AuthActions.authFailure({
+                message: error.error.message,
+              })
+            );
+          })
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+export const logout = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const profileService = inject(AuthService);
+    const router = inject(Router);
+
+    return actions$.pipe(
+      ofType(AuthActions.logout),
+      switchMap(() => {
+        profileService.logout();
+        return of(AuthActions.logoutSuccess());
+      })
     );
   },
   { functional: true }

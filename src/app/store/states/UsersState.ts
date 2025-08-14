@@ -19,6 +19,7 @@ export interface User {
   contractNumber?: string;
   agencieId?: string;
   userType?: UserType;
+  profilePicture?: string;
   status?: AccountStatus;
 }
 

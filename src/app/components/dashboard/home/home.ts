@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../../../store/features/auth/auth.action';
 import { selectUser } from '../../../store/features/auth/auth.selector';
+import { NotificationSocketService } from '../../../store/services/ws.service';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,9 @@ export class Home implements OnInit {
   route = inject(ActivatedRoute);
   router = inject(Router);
   store = inject(Store);
+  constructor(private notificationSocketService: NotificationSocketService) {
+    this.notificationSocketService.connect();
+  }
 
   ngOnInit(): void {
     this.store.dispatch(AuthActions.getProfile());

@@ -25,4 +25,9 @@
       </button>
     </form>
   </div>
+  <div class="col-12">
+    @if(model.comments && model.comments.length > 0 ){
+    <app-comments-sections [comments]="model.comments"></app-comments-sections>
+    }
+  </div>
 </div>

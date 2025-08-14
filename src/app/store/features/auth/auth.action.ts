@@ -24,5 +24,9 @@ export const AuthActions = {
     '[Auth] Update Profile',
     props<{ profileData: User }>()
   ),
+  logout: createAction('[Auth] LogOut'),
+  logoutSuccess: createAction('[Auth] LogOutSuccss'),
   skipErrorDeclaration: createAction('[Auth] Skip Error Declaration'),
+  checkSession: createAction('[Auth] checkSession'),
+  checkSessionSuccess: createAction('[Auth] checkSessionSuccess'),
 };

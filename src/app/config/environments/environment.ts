@@ -1,7 +1,9 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:3000/api',
+  notifications: '/notifications',
   auth: {
+    sessionStatus: '/auth/session-check',
     login: '/auth/login',
     refresh: '/auth/refresh',
     logout: '/auth/logout',
@@ -15,6 +17,7 @@ export const environment = {
   posts: {
     fetch: '/posts/posts',
     add: '/posts/posts',
+    tags: '/posts/tags',
   },
   profile: {
     get: '/users/profile',

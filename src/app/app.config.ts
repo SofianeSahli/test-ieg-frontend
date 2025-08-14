@@ -34,6 +34,7 @@ import { providePostFeature } from './store/features/posts/posts.feature';
 import { tokenInterceptor } from './store/services/http-token-interceptor';
 import { Select } from './components/widgets/forms/select/select';
 import { InputComponent } from './components/widgets/forms/input-component/input-component';
+import { notifsFeature } from './store/features/notifications/notifications.feature';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
 ) => new TranslateHttpLoader(http, './i18n/', '.json');
@@ -82,6 +83,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     [
+      notifsFeature(),
       provideAuthFeature(),
       provideStore(),
       provideEmployeeFeature(),
